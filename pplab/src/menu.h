@@ -6,3 +6,4 @@
 #endif /* MENU_H_ */
 
 char menu();
+int modifMenu();

@@ -10,27 +10,30 @@
 #include "trabajo.h"
 #include "menu.h"
 #include "validar.h"
-
-#define TAMMC 5 // TAManio Marca Color
-#define TAMS 4 // TAManio Servicio
-#define TAMA 5 // TAManio Auto
-#define TAMT 5 // TAM Trabajo
+#define TAMMC 5 	// TAManio Marca Color
+#define TAMS 4 		// TAManio Servicio
+#define TAMA 100 	// TAManio Auto
+#define TAMT 1000   // TAM Trabajo
+#define TAMH 9		// TAM Hardcodeo
 
 int main(void) {
 
 	char continuar = 's';
+	int readyAuto = 0;
 	eMarca marca[TAMMC] = {{1000, "Renault"}, {1001, "Fiat"}, {1002, "Ford"}, {1003, "Chevrolet"}, {1004, "Peugeot"}};
 	eColor color[TAMMC] = {{5000, "Negro"}, {5001, "Blanco"}, {5002, "Gris"}, {5003, "Rojo"}, {5004, "Azul"}};
 	eServicio servicio[TAMS] = {{20000, "Lavado", 250}, {20001, "Pulido", 300}, {20002, "Encerado", 400}, {20003, "Completo", 600}};
 	eAuto tutu[TAMA];
 	eTrabajo trabajo[TAMT];
-	int readyAuto = 0;
 
 	setbuf(stdout, NULL);
 
+
 	initAuto(tutu, TAMA);
 	initTrabajo(trabajo, TAMT);
+	//hardcodear(tutu, TAMH);
 	printf("*** BIENVENIDO ***\n\n");
+
 
 	do
 		{
@@ -46,49 +49,49 @@ int main(void) {
 					}
 					break;
 				case 'b':
-					if (!(noAuto(readyAuto)))
+					if ((hayAuto(readyAuto)))
 					{
-					modificarAuto(tutu, TAMA, color, TAMMC);
+					modificarAuto(tutu, TAMA, color, TAMMC, marca, TAMMC);
 					}
 					break;
 				case 'c':
-					if (!(noAuto(readyAuto)))
+					if ((hayAuto(readyAuto)))
 					{
-					bajaAuto(tutu, TAMA);
+					bajaAuto(tutu, TAMA, color, TAMMC, marca, TAMMC);
 					}
 					break;
 				case 'd':
-					if (!(noAuto(readyAuto)))
+					if ((hayAuto(readyAuto)))
 					{
-					listarAutos(tutu, TAMA, color, TAMMC, marca, TAMMC); //FALTA ORDENAMIENTO
+					ordenarAuto(tutu, TAMA, color, TAMMC, marca, TAMMC);
 					}
 					break;
 				case 'e':
-					if (!(noAuto(readyAuto)))
+					if ((hayAuto(readyAuto)))
 					{
 					listarMarca(marca, TAMMC);
 					}
 					break;
 				case 'f':
-					if (!(noAuto(readyAuto)))
+					if ((hayAuto(readyAuto)))
 					{
 					listarColor(color, TAMMC);
 					}
 					break;
 				case 'g':
-					if (!(noAuto(readyAuto)))
+					if ((hayAuto(readyAuto)))
 					{
 					listarServicio(servicio, TAMS);
 					}
 					break;
 				case 'h':
-					if (!(noAuto(readyAuto)))
+					if ((hayAuto(readyAuto)))
 					{
-					altaTrabajo(trabajo, TAMT, servicio, TAMS);
+					altaTrabajo(trabajo, TAMT, servicio, TAMS, tutu, TAMA, color, TAMMC, marca, TAMMC);
 					}
 					break;
 				case 'i':
-					if (!(noAuto(readyAuto)))
+					if ((hayAuto(readyAuto)))
 					{
 					listarTrabajos(trabajo,TAMS, servicio, TAMS);
 					}
@@ -97,11 +100,9 @@ int main(void) {
 					printf("Opcion invalida\n");
 					break;
 			}
-
 			system("pause");
 			fflush(stdin);
 		}while(continuar == 's');
-
 
 	return EXIT_SUCCESS;
 }
